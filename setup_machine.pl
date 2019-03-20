@@ -46,6 +46,18 @@ parse_git_branch() {
 }
 export PS1="\[\033[0;91m\]\u \[\033[1;94m\]\w\[\033[0;93m\]\$(parse_git_branch) \[\033[0;89m\]$ \[\033[00m\]"
 & . "\n";
+
+$setup.= q%if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    #alias dir='dir --color=auto'
+    #alias vdir='vdir --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+% . "\n"; 
 print $fh $setup;
 close($fh);
 system('source ~/.bashrc');
