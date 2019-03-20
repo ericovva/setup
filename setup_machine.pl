@@ -44,7 +44,7 @@ $setup.= q&
 parse_git_branch() {
          git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
-export PS1="\[\033[1;96m\]\u \[\033[0;92m\]\w\[\033[33m\]\$(parse_git_branch) \[\033[1;96m\]$ \[\033[00m\]"
+export PS1="\[\033[0;91m\]\u \[\033[1;94m\]\w\[\033[0;93m\]\$(parse_git_branch) \[\033[0;89m\]$ \[\033[00m\]"
 & . "\n";
 print $fh $setup;
 close($fh);
