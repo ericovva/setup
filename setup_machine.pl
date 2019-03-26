@@ -20,7 +20,7 @@ nnoremap O gT
 print $fh $vim;
 close($fh);
 
-system('sudo apt-get install ack');
+system('sudo apt-get install ack-grep; sudo dpkg-divert --local --divert /usr/bin/ack --rename --add /usr/bin/ack-grep');
 
 open(my $fh, '>>', glob('~/.bashrc')) or die;
 my $setup = q(transfer() { if [ $# -eq 0 ]; then echo -e "No arguments specified. Usage:\necho transfer /tmp/test.md\ncat /tmp/test.md | transfer test.md"; return 1; fi 
