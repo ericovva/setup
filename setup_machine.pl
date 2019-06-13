@@ -20,25 +20,13 @@ nnoremap O gT
 print $fh $vim;
 close($fh);
 
-system('sudo apt-get install ack-grep; sudo dpkg-divert --local --divert /usr/bin/ack --rename --add /usr/bin/ack-grep');
+system('/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"');
+system('brew install ack');
 
 open(my $fh, '>>', glob('~/.bashrc')) or die;
 my $setup = q(transfer() { if [ $# -eq 0 ]; then echo -e "No arguments specified. Usage:\necho transfer /tmp/test.md\ncat /tmp/test.md | transfer test.md"; return 1; fi 
 tmpfile=$( mktemp -t transferXXX ); if tty -s; then basefile=$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g'); curl --progress-bar --upload-file "$1" "https://transfer.sh/$basefile" >> $tmpfile; else curl --progress-bar --upload-file "-" "https://transfer.sh/$1" >> $tmpfile ; fi; cat $tmpfile; rm -f $tmpfile; }) . "\n";
 $setup .= q(alias clear_all="clear && printf '\e[3J'") . "\n";
-$setup.= q(
-ack_all() {
-    ack "$1" /home/e.ovsepyan/mpop/mympop/
-    ack "$1" /home/e.ovsepyan/mydawn/
-    ack "$1" /home/e.ovsepyan/mr-music/
-}
-
-grep_all() {
-    grep -r "$1" /home/e.ovsepyan/mpop/mympop/
-    grep -r "$1" /home/e.ovsepyan/mydawn/
-    grep -r "$1" /home/e.ovsepyan/mr-music/
-}
-) . "\n";
 
 $setup.= q&
 parse_git_branch() {
@@ -70,7 +58,7 @@ eval {
 
 say($@);
 
-system('sudo apt-get install tmux');
+system('brew install tmux');
 
 #eval {
 #    chdir glob('~/.tmux'); 
