@@ -26,19 +26,6 @@ open(my $fh, '>>', glob('~/.bashrc')) or die;
 my $setup = q(transfer() { if [ $# -eq 0 ]; then echo -e "No arguments specified. Usage:\necho transfer /tmp/test.md\ncat /tmp/test.md | transfer test.md"; return 1; fi 
 tmpfile=$( mktemp -t transferXXX ); if tty -s; then basefile=$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g'); curl --progress-bar --upload-file "$1" "https://transfer.sh/$basefile" >> $tmpfile; else curl --progress-bar --upload-file "-" "https://transfer.sh/$1" >> $tmpfile ; fi; cat $tmpfile; rm -f $tmpfile; }) . "\n";
 $setup .= q(alias clear_all="clear && printf '\e[3J'") . "\n";
-$setup.= q(
-ack_all() {
-    ack "$1" /home/e.ovsepyan/mpop/mympop/
-    ack "$1" /home/e.ovsepyan/mydawn/
-    ack "$1" /home/e.ovsepyan/mr-music/
-}
-
-grep_all() {
-    grep -r "$1" /home/e.ovsepyan/mpop/mympop/
-    grep -r "$1" /home/e.ovsepyan/mydawn/
-    grep -r "$1" /home/e.ovsepyan/mr-music/
-}
-) . "\n";
 
 $setup.= q&
 parse_git_branch() {
